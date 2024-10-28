@@ -2,13 +2,12 @@ import React from "react";
 
 import "./App.css";
 import { WeatherProvider } from "./context/WeatherContext";
+import { WeatherForm } from "./components/WeatherForm";
 
 function App() {
   return (
     <WeatherProvider>
-      <div>
-        <h1>Hello World</h1>
-      </div>
+      <WeatherForm />
     </WeatherProvider>
   );
 }
