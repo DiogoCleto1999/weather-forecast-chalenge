@@ -7,6 +7,7 @@ interface WeatherContextProps {
   setCity: (city: string) => void;
   setWeatherCityData: (data: any) => void;
   setUnit: (unit: "metric" | "imperial") => void;
+  dailyForecast: { [date: string]: any };
 }
 
 const WeatherContext = createContext<WeatherContextProps | undefined>(
@@ -28,6 +29,18 @@ export const WeatherProvider: React.FC<{ children: React.ReactNode }> = ({
   const [weatherCityData, setWeatherCityData] = useState<any>(null);
   const [unit, setUnit] = useState<"metric" | "imperial">("metric");
 
+  const dailyForecast: { [date: string]: any } = {};
+
+  // Populate dailyForecast from weatherCityData
+  if (weatherCityData && weatherCityData.list) {
+    for (let forecast of weatherCityData.list) {
+      const date = new Date(forecast.dt * 1000).toLocaleDateString();
+      if (!dailyForecast[date]) {
+        dailyForecast[date] = forecast;
+      }
+    }
+  }
+
   return (
     <WeatherContext.Provider
       value={{
@@ -37,6 +50,7 @@ export const WeatherProvider: React.FC<{ children: React.ReactNode }> = ({
         setCity,
         setWeatherCityData,
         setUnit,
+        dailyForecast,
       }}
     >
       {children}
