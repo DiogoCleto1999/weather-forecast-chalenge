@@ -7,6 +7,7 @@ import WeatherDisplay from "./components/WeatherDisplay";
 import WeatherDisplay5Days from "./components/WeatherDisplay5Days/WeatherDisplay5Days";
 import TemperatureChart from "./components/TemperatureChart";
 import { GlobalStyle } from "./styles/GlobalStyles";
+import WeatherMap from "./components/WeatherMap";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <WeatherDisplay />
         <WeatherDisplay5Days />
         <TemperatureChart />
+        <WeatherMap />
       </div>
     </WeatherProvider>
   );

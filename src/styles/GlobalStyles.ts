@@ -103,7 +103,7 @@ export const GlobalStyle = createGlobalStyle`
     height: 400px; /* Altura do mapa */
     width: 100%;   /* Largura do mapa */
     position: relative; /* Para controle de sobreposição */
-    margin-top: 30px;
+    margin-top: 10px;
     
   }
 
