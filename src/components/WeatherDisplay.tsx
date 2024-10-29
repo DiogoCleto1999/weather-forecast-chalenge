@@ -1,41 +1,23 @@
+import React from "react";
+import styled from "styled-components";
 import { useWeather } from "../context/WeatherContext";
 
-export const WeatherDisplay = () => {
-  const { city, weatherCityData, unit } = useWeather();
+const WeatherDisplay = () => {
+  const { weatherCityData, unit } = useWeather();
 
   if (!weatherCityData) return null;
 
   console.log("weatherdata", weatherCityData);
-  const currentTemp = weatherCityData?.list[0]?.main?.temp;
+  const currentTemp = weatherCityData?.main?.temp;
 
-  const getDayOfWeek = (dateString: string | number | Date) => {
-    const date = new Date(dateString);
-    const daysOfWeek = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ];
-    return daysOfWeek[date.getDay()];
-  };
-
-  //get the day of the week
-  const dayOfWeek = weatherCityData.list[0].dt_txt
-    ? getDayOfWeek(weatherCityData.list[0].dt_txt)
-    : "Unknown Day";
-
-  //get weather description and icon
+  //get weather description and icon, handling the possibility of missing weather data
   const weatherDescription =
-    weatherCityData.list[0].weather[0].description ??
-    "No description available";
-  const weatherIcon = weatherCityData.list[0].weather[0].icon;
+    weatherCityData.weather[0]?.description ?? "No description available";
+  const weatherIcon = weatherCityData.weather?.[0]?.icon;
+
   return (
     <div className="temp-display-container">
-      <h2>Weather in {city}</h2>
-      <h3>{dayOfWeek}</h3>
+      <h2>Weather in {weatherCityData.name}</h2>
       <div>
         {weatherIcon && (
           <img
@@ -51,14 +33,31 @@ export const WeatherDisplay = () => {
       <h3>
         Current Temperature: {currentTemp}°{unit === "metric" ? "C" : "F"}
       </h3>
-      <div>
-        <div>
-          Temp Min: {Math.round(weatherCityData?.list[0]?.main?.temp_min)}°C
-        </div>
-        <div>
-          Temp Max: {Math.round(weatherCityData?.list[0]?.main?.temp_max)}°C
-        </div>
-      </div>
+      <StyledDivTempMinMax>
+        <StyledPTempMinMax>
+          Temp Min: {Math.round(weatherCityData?.main?.temp_min)}°
+          {unit === "metric" ? "C" : "F"}
+        </StyledPTempMinMax>
+        <StyledPTempMinMax>
+          Temp Max: {Math.round(weatherCityData?.main?.temp_max)}°
+          {unit === "metric" ? "C" : "F"}
+        </StyledPTempMinMax>
+      </StyledDivTempMinMax>
     </div>
   );
 };
+
+const StyledDivTempMinMax = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 300px;
+`;
+
+const StyledPTempMinMax = styled.p`
+  display: flex;
+  text-align: center;
+`;
+
+export default WeatherDisplay;

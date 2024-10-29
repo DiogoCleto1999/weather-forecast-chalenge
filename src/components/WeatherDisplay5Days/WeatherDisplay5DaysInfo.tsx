@@ -1,14 +1,15 @@
 // src/components/WeatherDisplay5Days/WeatherDisplay5DaysInfo.tsx
 import React from "react";
+import styled from "styled-components";
 import { useWeather } from "../../context/WeatherContext";
 
 interface WeatherDisplay5DaysInfoProps {
   weatherData: any;
 }
 
-export const WeatherDisplay5DaysInfo: React.FC<
-  WeatherDisplay5DaysInfoProps
-> = ({ weatherData }) => {
+const WeatherDisplay5DaysInfo: React.FC<WeatherDisplay5DaysInfoProps> = ({
+  weatherData,
+}) => {
   const { unit } = useWeather();
 
   const currentTemp = weatherData?.main?.temp;
@@ -30,7 +31,7 @@ export const WeatherDisplay5DaysInfo: React.FC<
   const dayOfWeek = getDayOfWeek(weatherData.dt_txt);
 
   return (
-    <div>
+    <StyledDivDisplayContainer>
       <h3>{dayOfWeek}</h3>
       <div>
         <img
@@ -45,10 +46,37 @@ export const WeatherDisplay5DaysInfo: React.FC<
       <h3>
         Temperature: {currentTemp}°{unit === "metric" ? "C" : "F"}
       </h3>
-      <div>
-        <div>Temp Min: {Math.round(weatherData.main.temp_min)}°C</div>
-        <div>Temp Max: {Math.round(weatherData.main.temp_max)}°C</div>
-      </div>
-    </div>
+      <StyledDivTempMinMax>
+        <StyledPTempMinMax>
+          Temp Min: {Math.round(weatherData.main.temp_min)}°
+          {unit === "metric" ? "C" : "F"}
+        </StyledPTempMinMax>
+        <StyledPTempMinMax>
+          Temp Max: {Math.round(weatherData.main.temp_max)}°
+          {unit === "metric" ? "C" : "F"}
+        </StyledPTempMinMax>
+      </StyledDivTempMinMax>
+    </StyledDivDisplayContainer>
   );
 };
+
+const StyledDivDisplayContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: #d9d9d9;
+  text-align: center;
+  border-radius: 8px;
+`;
+
+const StyledDivTempMinMax = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+`;
+
+const StyledPTempMinMax = styled.p`
+  margin: 0;
+  padding: 10px;
+`;
+
+export default WeatherDisplay5DaysInfo;

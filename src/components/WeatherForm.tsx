@@ -1,12 +1,19 @@
-import { useEffect } from "react";
+// src/components/WeatherForm.tsx
+import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { getWeatherData } from "../api/weatherAPI";
-
+import { getWeatherData, getCurrentWeatherData } from "../api/weatherAPI";
 import { useWeather } from "../context/WeatherContext";
 
-export const WeatherForm = () => {
-  const { setWeatherCityData, unit, setUnit, city, setCity } = useWeather();
+const WeatherForm = () => {
+  const {
+    setWeatherCityData,
+    unit,
+    setUnit,
+    city,
+    setCity,
+    setWeatherCityDataForecast,
+  } = useWeather();
 
   const formik = useFormik({
     initialValues: {
@@ -15,7 +22,7 @@ export const WeatherForm = () => {
     validationSchema: Yup.object({
       city: Yup.string().required("City name is required"),
     }),
-    onSubmit: async (values) => {
+    onSubmit: async (values: { city: string }) => {
       await fetchWeatherData(values.city);
     },
   });
@@ -23,8 +30,11 @@ export const WeatherForm = () => {
   const fetchWeatherData = async (city: string) => {
     try {
       setCity(city);
-      const data = await getWeatherData(city, unit);
+      const data = await getCurrentWeatherData(city, unit);
+      const dataForecast = await getWeatherData(city, unit);
+
       setWeatherCityData(data);
+      setWeatherCityDataForecast(dataForecast);
     } catch (error) {
       alert("Unable to fetch weather data. Please check the city name.");
     }
@@ -51,11 +61,11 @@ export const WeatherForm = () => {
         <button type="submit">Get Forecast</button>
       </form>
       <div>
-        <div>
-          <button onClick={() => setUnit("metric")}>Celsius</button>
-          <button onClick={() => setUnit("imperial")}>Fahrenheit</button>
-        </div>
+        <button onClick={() => setUnit("metric")}>Celsius</button>
+        <button onClick={() => setUnit("imperial")}>Fahrenheit</button>
       </div>
     </div>
   );
 };
+
+export default WeatherForm;
