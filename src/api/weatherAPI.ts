@@ -44,50 +44,68 @@ export const getCurrentWeatherData = async (
   }
 };
 
-// Helper function to handle Axios errors
+const shownErrors = new Set<string>();
+
 const handleAxiosError = (error: unknown) => {
   if (axios.isAxiosError(error)) {
-    // Now error is of type AxiosError
     if (error.response) {
-      // Handle specific HTTP errors
+      let message: string;
+
       switch (error.response.status) {
         case 404:
-          console.warn("Error 404: City not found.");
-          alert("City not found. Please check the city name and try again.");
+          message = "City not found. Please check the city name and try again.";
           break;
         case 400:
-          console.error("Error 400: Bad Request.");
-          alert("Bad request. Please check your input and try again.");
+          message = "Bad request. Please check your input and try again.";
           break;
         case 403:
-          console.error("Error 403: Forbidden.");
-          alert(
-            "Access forbidden. You do not have permission to access this resource."
-          );
+          message =
+            "Access forbidden. You do not have permission to access this resource.";
           break;
         case 500:
-          console.error("Error 500: Internal Server Error.");
-          alert("Internal server error. Please try again later.");
+          message = "Internal server error. Please try again later.";
           break;
         case 503:
-          console.error("Error 503: Service Unavailable.");
-          alert("Service is currently unavailable. Please try again later.");
+          message = "Service is currently unavailable. Please try again later.";
           break;
         default:
-          console.error(
-            `Error ${error.response.status}: ${error.response.data.message}`
-          );
-          alert(`An error occurred: ${error.response.data.message}`);
+          message = `An error occurred: ${error.response.data.message}`;
+      }
+
+      if (!shownErrors.has(message)) {
+        console.error(`Error ${error.response.status}:`, message);
+        alert(message);
+        shownErrors.add(message);
+      } else {
+        shownErrors.delete(message);
       }
     } else if (error.request) {
-      console.error("Internet connection issue or server is unreachable.");
-      alert("Please check your internet connection and try again.");
+      const message = "Please check your internet connection and try again.";
+      if (!shownErrors.has(message)) {
+        console.error("Internet connection issue or server is unreachable.");
+        alert(message);
+        shownErrors.add(message);
+      } else {
+        shownErrors.delete(message);
+      }
     } else {
-      console.error("Error:", error.message);
-      alert("An unexpected error occurred. Please try again later.");
+      const message = "An unexpected error occurred. Please try again later.";
+      if (!shownErrors.has(message)) {
+        console.error("Error:", error.message);
+        alert(message);
+        shownErrors.add(message);
+      } else {
+        shownErrors.delete(message);
+      }
     }
   } else {
-    console.error("An unexpected error occurred:", error);
-    alert("An unexpected error occurred. Please try again later.");
+    const message = "An unexpected error occurred. Please try again later.";
+    if (!shownErrors.has(message)) {
+      console.error("An unexpected error occurred:", error);
+      alert(message);
+      shownErrors.add(message);
+    } else {
+      shownErrors.delete(message);
+    }
   }
 };

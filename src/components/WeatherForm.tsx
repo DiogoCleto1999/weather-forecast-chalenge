@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { getWeatherData, getCurrentWeatherData } from "../api/weatherAPI";
 import { useWeather } from "../context/WeatherContext";
 
-const WeatherForm = () => {
+const WeatherForm: React.FC = () => {
   const {
     setWeatherCityData,
     unit,
@@ -13,6 +13,9 @@ const WeatherForm = () => {
     city,
     setCity,
     setWeatherCityDataForecast,
+    setPosition,
+    weatherCityData,
+    position,
   } = useWeather();
 
   const formik = useFormik({
@@ -35,9 +38,7 @@ const WeatherForm = () => {
 
       setWeatherCityData(data);
       setWeatherCityDataForecast(dataForecast);
-    } catch (error) {
-      alert("Unable to fetch weather data. Please check the city name.");
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -60,10 +61,12 @@ const WeatherForm = () => {
         {formik.errors.city && <div>{formik.errors.city}</div>}
         <button type="submit">Get Forecast</button>
       </form>
-      <div>
-        <button onClick={() => setUnit("metric")}>Celsius</button>
-        <button onClick={() => setUnit("imperial")}>Fahrenheit</button>
-      </div>
+      {weatherCityData && (
+        <div>
+          <button onClick={() => setUnit("metric")}>Celsius</button>
+          <button onClick={() => setUnit("imperial")}>Fahrenheit</button>
+        </div>
+      )}
     </div>
   );
 };

@@ -48,7 +48,7 @@ const TemperatureLayer = ({
 
 const WeatherMap = () => {
   const API_KEY = String(process.env.REACT_APP_API_KEY || "");
-  const { position } = useWeather();
+  const { weatherCityData, position } = useWeather();
   const mapRef = useRef<LeafletMap | null>(null);
 
   useEffect(() => {
@@ -56,13 +56,11 @@ const WeatherMap = () => {
       mapRef.current.setView(position, 10);
     }
   }, [position]);
+  console.log("posicaooooooo", position);
+  if (!weatherCityData) return null;
 
   return (
     <div>
-      <div>
-        {" "}
-        <h2>Temperature Map</h2>
-      </div>
       {position && (
         <MapContainer
           center={position}
