@@ -1,7 +1,15 @@
 import React, { useEffect, useRef } from "react";
-import { MapContainer, TileLayer, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
 import L, { Map as LeafletMap } from "leaflet";
 import { useWeather } from "../context/WeatherContext";
+
+const defaultIcon = new L.Icon({
+  iconUrl: require("leaflet/dist/images/marker-icon.png"),
+  shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+});
 
 const TemperatureLayer = ({
   apiKey,
@@ -43,8 +51,9 @@ const TemperatureLayer = ({
 
 const WeatherMap = () => {
   const API_KEY = String(process.env.REACT_APP_API_KEY || "");
-  const { weatherCityData, position } = useWeather();
+  const { weatherCityData, position, unit } = useWeather();
   const mapRef = useRef<LeafletMap | null>(null);
+  const currentTemp = weatherCityData?.main?.temp;
 
   useEffect(() => {
     if (mapRef.current && position) {
@@ -64,6 +73,12 @@ const WeatherMap = () => {
             if (ref) mapRef.current = ref as LeafletMap;
           }}
         >
+          <Marker position={position} icon={defaultIcon}>
+            <Popup>
+              {weatherCityData.name} <br />
+              Temperature: {currentTemp}°{unit === "metric" ? "C" : "F"}
+            </Popup>
+          </Marker>
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
