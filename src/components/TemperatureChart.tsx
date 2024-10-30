@@ -40,8 +40,6 @@ const TemperatureChart = () => {
   const firstSevenDataWeather = dataWeather.slice(0, 9);
   const firstSevenLabels = labels.slice(0, 9);
 
-  console.log("firstSevenLabels", firstSevenLabels);
-
   const extractHours = (dateTimeArray: string[]) => {
     return dateTimeArray.map((dateTime) => {
       const hour = dateTime.split(" ")[1].split(":")[0];

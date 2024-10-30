@@ -72,7 +72,6 @@ const handleAxiosError = (error: unknown) => {
       }
 
       if (!shownErrors.has(message)) {
-        console.error(`Error ${error.response.status}:`, message);
         alert(message);
         shownErrors.add(message);
       } else {
@@ -81,7 +80,6 @@ const handleAxiosError = (error: unknown) => {
     } else if (error.request) {
       const message = "Please check your internet connection and try again.";
       if (!shownErrors.has(message)) {
-        console.error("Internet connection issue or server is unreachable.");
         alert(message);
         shownErrors.add(message);
       } else {
@@ -90,7 +88,6 @@ const handleAxiosError = (error: unknown) => {
     } else {
       const message = "An unexpected error occurred. Please try again later.";
       if (!shownErrors.has(message)) {
-        console.error("Error:", error.message);
         alert(message);
         shownErrors.add(message);
       } else {
@@ -100,7 +97,6 @@ const handleAxiosError = (error: unknown) => {
   } else {
     const message = "An unexpected error occurred. Please try again later.";
     if (!shownErrors.has(message)) {
-      console.error("An unexpected error occurred:", error);
       alert(message);
       shownErrors.add(message);
     } else {

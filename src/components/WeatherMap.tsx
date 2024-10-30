@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { MapContainer, TileLayer, useMap } from "react-leaflet";
-import L, { Map as LeafletMap } from "leaflet"; // Import Leaflet types
-import "leaflet/dist/leaflet.css";
+import L, { Map as LeafletMap } from "leaflet";
 import { useWeather } from "../context/WeatherContext";
 
 const TemperatureLayer = ({
@@ -15,8 +14,6 @@ const TemperatureLayer = ({
   const temperatureLayerRef = React.useRef<L.TileLayer | null>(null); // Store the layer reference
 
   useEffect(() => {
-    console.log("position", position);
-
     // If there's an existing layer, remove it
     if (temperatureLayerRef.current) {
       map.removeLayer(temperatureLayerRef.current);
@@ -54,7 +51,6 @@ const WeatherMap = () => {
       mapRef.current.setView(position, 10);
     }
   }, [position]);
-  console.log("posicaooooooo", position);
   if (!weatherCityData) return null;
 
   return (
