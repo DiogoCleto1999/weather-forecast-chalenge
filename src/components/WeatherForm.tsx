@@ -1,11 +1,10 @@
-// src/components/WeatherForm.tsx
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { getWeatherData, getCurrentWeatherData } from "../api/weatherAPI";
 import { useWeather } from "../context/WeatherContext";
 
-const WeatherForm: React.FC = () => {
+const WeatherForm = () => {
   const {
     setWeatherCityData,
     unit,
@@ -13,9 +12,7 @@ const WeatherForm: React.FC = () => {
     city,
     setCity,
     setWeatherCityDataForecast,
-    setPosition,
     weatherCityData,
-    position,
   } = useWeather();
 
   const formik = useFormik({
@@ -49,22 +46,31 @@ const WeatherForm: React.FC = () => {
   }, [unit]);
 
   return (
-    <div>
-      <form onSubmit={formik.handleSubmit}>
-        <input
-          type="text"
-          name="city"
-          placeholder="Enter city"
-          onChange={formik.handleChange}
-          value={formik.values.city}
-        />
-        {formik.errors.city && <div>{formik.errors.city}</div>}
-        <button type="submit">Get Forecast</button>
-      </form>
-      {weatherCityData && (
+    <div className="form-container">
+      <form className="search" onSubmit={formik.handleSubmit}>
         <div>
-          <button onClick={() => setUnit("metric")}>Celsius</button>
-          <button onClick={() => setUnit("imperial")}>Fahrenheit</button>
+          <input
+            type="text"
+            name="city"
+            placeholder="Enter city"
+            onChange={formik.handleChange}
+            value={formik.values.city}
+          />
+        </div>
+        <div>
+          <button type="submit">Get Forecast</button>
+        </div>
+      </form>
+      {formik.errors.city && <div>{formik.errors.city}</div>}
+
+      {weatherCityData && (
+        <div className="units">
+          <button className="unit-button" onClick={() => setUnit("metric")}>
+            Celsius
+          </button>
+          <button className="unit-button" onClick={() => setUnit("imperial")}>
+            Fahrenheit
+          </button>
         </div>
       )}
     </div>

@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { useWeather } from "../context/WeatherContext";
 
@@ -35,14 +34,14 @@ const WeatherDisplay = () => {
         Current Temperature: {currentTemp}°{unit === "metric" ? "C" : "F"}
       </h3>
       <StyledDivTempMinMax>
-        <StyledPTempMinMax>
+        <p>
           Temp Min: {Math.round(weatherCityData?.main?.temp_min)}°
           {unit === "metric" ? "C" : "F"}
-        </StyledPTempMinMax>
-        <StyledPTempMinMax>
+        </p>
+        <p>
           Temp Max: {Math.round(weatherCityData?.main?.temp_max)}°
           {unit === "metric" ? "C" : "F"}
-        </StyledPTempMinMax>
+        </p>
       </StyledDivTempMinMax>
     </div>
   );
@@ -60,11 +59,6 @@ const StyledDivTempMinMax = styled.div`
     padding: 10px 10px;
     flex-direction: column;
   }
-`;
-
-const StyledPTempMinMax = styled.p`
-  display: flex;
-  text-align: center;
 `;
 
 export default WeatherDisplay;

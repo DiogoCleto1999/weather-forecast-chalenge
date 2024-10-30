@@ -1,4 +1,3 @@
-// src/components/WeatherDisplay5Days/WeatherDisplay5DaysInfo.tsx
 import React from "react";
 import styled from "styled-components";
 import { useWeather } from "../../context/WeatherContext";
@@ -32,7 +31,7 @@ const WeatherDisplay5DaysInfo: React.FC<WeatherDisplay5DaysInfoProps> = ({
 
   return (
     <StyledDivDisplayContainer>
-      <h3>{dayOfWeek}</h3>
+      <h3 style={{ marginTop: "10px" }}>{dayOfWeek}</h3>
       <div>
         <img
           src={`http://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`}

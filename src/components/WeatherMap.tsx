@@ -1,6 +1,4 @@
-// WeatherMap.tsx
-
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { MapContainer, TileLayer, useMap } from "react-leaflet";
 import L, { Map as LeafletMap } from "leaflet"; // Import Leaflet types
 import "leaflet/dist/leaflet.css";
@@ -75,7 +73,6 @@ const WeatherMap = () => {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           />
           <TemperatureLayer apiKey={API_KEY} position={position} />{" "}
-          {/* Use the TemperatureLayer component */}
         </MapContainer>
       )}
     </div>

@@ -1,5 +1,4 @@
-import axios, { AxiosError } from "axios";
-
+import axios from "axios";
 const API_KEY = process.env.REACT_APP_API_KEY;
 const FORECAST_URL = `https://api.openweathermap.org/data/2.5/forecast`;
 const WEATHER_URL = `https://api.openweathermap.org/data/2.5/weather`;
@@ -33,7 +32,7 @@ export const getCurrentWeatherData = async (
     const response = await axios.get(WEATHER_URL, {
       params: {
         q: city,
-        units, //'metric' for Celsius or 'imperial' for Fahrenheit
+        units,
         appid: API_KEY,
       },
     });

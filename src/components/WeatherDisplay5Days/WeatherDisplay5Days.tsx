@@ -1,4 +1,3 @@
-// src/components/WeatherDisplay5Days/WeatherDisplay5Days.tsx
 import React from "react";
 import styled from "styled-components";
 import WeatherDisplay5DaysInfo from "./WeatherDisplay5DaysInfo";
@@ -22,7 +21,6 @@ const WeatherDisplay5Days = () => {
   );
 };
 
-// Apply the background color to the entire container
 const StyledWeatherDisplayContainer = styled.div`
   background-color: #fff;
   display: flex;

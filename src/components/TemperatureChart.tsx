@@ -13,7 +13,6 @@ import { Line } from "react-chartjs-2";
 import { useWeather } from "../context/WeatherContext";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 
-// Register Chart.js components
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -31,7 +30,6 @@ const TemperatureChart = () => {
   if (!weatherCityDataForecast) return null;
   console.log("weatherCityDataForecast", weatherCityDataForecast);
 
-  // Extract labels and temperatures
   const labels = weatherCityDataForecast.list.map(
     (hour: { dt_txt: string }) => hour.dt_txt
   );
@@ -39,22 +37,18 @@ const TemperatureChart = () => {
     (item: any) => item.main.temp
   );
 
-  // Take the first 7 entries
   const firstSevenDataWeather = dataWeather.slice(0, 9);
   const firstSevenLabels = labels.slice(0, 9);
 
   console.log("firstSevenLabels", firstSevenLabels);
 
-  // Function to extract hours
   const extractHours = (dateTimeArray: string[]) => {
     return dateTimeArray.map((dateTime) => {
-      // Split the string by space and take the hour part
       const hour = dateTime.split(" ")[1].split(":")[0];
       return hour;
     });
   };
 
-  // Get the hours
   const hours = extractHours(firstSevenLabels);
 
   const options = {
@@ -109,18 +103,17 @@ const TemperatureChart = () => {
     },
   };
 
-  // Set up the data for the chart
   const data = {
-    labels: hours, // Correctly set hours as a flat array
+    labels: hours,
     datasets: [
       {
         label: "Temperature",
         data: firstSevenDataWeather,
         borderColor: "#284b63",
         borderWidth: 2,
-        backgroundColor: "rgba(40, 75, 99, 0.2)", // Fill color (light blue with transparency)
+        backgroundColor: "rgba(40, 75, 99, 0.2)",
 
-        fill: true,
+        fill: "start",
         datalabels: {
           color: "#000",
           formatter: (value: any) =>
@@ -132,7 +125,6 @@ const TemperatureChart = () => {
       },
     ],
   };
-
   return (
     <div className="chart-container">
       <Line options={options} data={data} />

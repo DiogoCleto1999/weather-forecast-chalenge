@@ -75,10 +75,46 @@ export const GlobalStyle = createGlobalStyle`
     height:20;
     }
 
+  .form-container {
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    gap:10px
+  }
+
+  .search{
+    display: flex;
+    flex-direction: row; 
+    justify-content: center; 
+    margin-bottom: 1rem;
+    gap: 10px;
+  }
+
+  .units{
+    display: flex;
+    flex-direction: row; 
+    gap: 10px;
+    justify-content: center; 
+  }
+
+
+
   button {
     background-color: #284b63;
     color: #fff;
-    padding: 0.75rem 1.25rem;
+    padding: 0.75rem ;
+    width: 120px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    
+  }
+
+  .unit-button{
+    background-color: #284b63;
+    color: #fff;
+    padding: 0.75rem;
+    width: 120px;
     border-radius: 5px;
     transition: background-color 0.3s ease;
     cursor: pointer;
@@ -87,20 +123,21 @@ export const GlobalStyle = createGlobalStyle`
   button:hover {
     background-color: #0056b3;
   }
+  
 
   input {
     width: 100%;
     max-width: 400px;
     padding: 0.75rem;
-    margin-bottom: 1rem;
     border: 1px solid #ddd;
     border-radius: 5px;
   }
+    
    
   .map-container {
-    height: 400px; /* Altura do mapa */
-    width: 100%;   /* Largura do mapa */
-    position: relative; /* Para controle de sobreposição */
+    height: 400px;
+    width: 100%;   
+    position: relative; 
     margin-top: 10px;
     
   }
@@ -138,13 +175,17 @@ export const GlobalStyle = createGlobalStyle`
       font-size: 1.75rem;
     }
 
-    input {
-      width: 90%;
-    }
+    
 
-    button {
+    .unit-button{
+    padding: 0.40rem 0.7rem;
+  }
+    
+    .search{
+      display: flex;
       width: 100%;
-      padding: 0.75rem;
+      flex-direction: column; 
+      justify-content: center; 
     }
   }
     
