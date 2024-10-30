@@ -96,8 +96,6 @@ export const GlobalStyle = createGlobalStyle`
     border: 1px solid #ddd;
     border-radius: 5px;
   }
-
-
    
   .map-container {
     height: 400px; /* Altura do mapa */
@@ -149,4 +147,19 @@ export const GlobalStyle = createGlobalStyle`
       padding: 0.75rem;
     }
   }
+    
+.chart-container {
+  position: relative;
+  height: 540px;
+  width: 100%;
+  
+  @media (max-width: 800px) {
+    height: 400px;
+  }
+
+  @media (max-width: 500px) {
+    height: 340px;
+  }
+}
+
 `;

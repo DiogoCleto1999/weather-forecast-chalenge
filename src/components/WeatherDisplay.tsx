@@ -17,12 +17,13 @@ const WeatherDisplay = () => {
 
   return (
     <div className="temp-display-container">
-      <h2>Weather in {weatherCityData.name}</h2>
+      <h2>Weather in {weatherCityData.name} Today</h2>
       <div>
         {weatherIcon && (
           <img
             src={`http://openweathermap.org/img/wn/${weatherIcon}.png`}
             alt={`Weather icon for ${weatherDescription}`}
+            style={{ width: "100px", height: "100px" }}
           />
         )}
         <h3>
@@ -50,9 +51,15 @@ const WeatherDisplay = () => {
 const StyledDivTempMinMax = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 300px;
+  padding-left: 250px; /* Horizontal padding */
+  padding-right: 250px; /* Horizontal padding */
+
+  @media (max-width: 600px) {
+    padding: 10px 10px;
+    flex-direction: column;
+  }
 `;
 
 const StyledPTempMinMax = styled.p`

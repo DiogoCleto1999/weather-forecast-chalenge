@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -12,8 +11,7 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { useWeather } from "../context/WeatherContext";
-import ChartDataLabels from "chartjs-plugin-datalabels"; // Importa o plugin de rótulos
-import { Align, Anchor } from "chartjs-plugin-datalabels/types/options";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
 // Register Chart.js components
 ChartJS.register(
@@ -58,18 +56,24 @@ const TemperatureChart = () => {
 
   // Get the hours
   const hours = extractHours(firstSevenLabels);
-  const align: Align = "top"; // You can set this to "bottom" if preferred
-  const anchor: Anchor = "end"; // You can set this to "bottom" if preferred
 
   const options = {
+    responsive: true,
+    maintainAspectRatio: false,
     plugins: {
+      legend: {
+        display: true,
+        position: "bottom" as const,
+      },
       title: {
         display: true,
         text: "Temperature Chart",
+        padding: {
+          bottom: 20,
+        },
       },
       datalabels: {
-        // Ativa o plugin de rótulos
-        display: true, // Exibe os rótulos
+        display: true,
       },
       tooltip: {
         callbacks: {
@@ -88,11 +92,11 @@ const TemperatureChart = () => {
       x: {
         title: {
           display: true,
-          text: "Hours", // Rótulo do eixo X
+          text: "Hours",
         },
       },
       y: {
-        display: false, // Oculta o eixo Y
+        display: false,
       },
     },
     layout: {
@@ -118,17 +122,21 @@ const TemperatureChart = () => {
 
         fill: true,
         datalabels: {
-          color: "#000", // Cor dos rótulos
+          color: "#000",
           formatter: (value: any) =>
-            `${value} °${unit === "metric" ? "C" : "F"}`, // Formatação dos rótulos
-          padding: 5, // Espaçamento entre o ponto e o rótulo
-          align: align,
-          anchor: anchor,
+            `${value} °${unit === "metric" ? "C" : "F"}`,
+          padding: 5,
+          align: "top" as const,
+          anchor: "end" as const,
         },
       },
     ],
   };
 
-  return <Line options={options} data={data} />;
+  return (
+    <div className="chart-container">
+      <Line options={options} data={data} />
+    </div>
+  );
 };
 export default TemperatureChart;
